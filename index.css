@@ -569,7 +569,7 @@ body {
          ========================================================================== */
 @media (max-width: 768px) {
   .music-control {
-    top: 650px;
+    top: 500px;
     bottom: 15px !important;
     right: 15px !important;
   }
