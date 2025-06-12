@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anniversary Letter</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(
+          45deg,
+          #ff9a9e 0%,
+          #fecfef 25%,
+          #fecfef 75%,
+          #ff9a9e 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        position: relative;
+        padding: 20px 10px;
+        overflow: hidden;
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: transparent;
+        color: #8b4513;
+        border: none;
+        padding: 0;
+        font-size: 32px;
+        cursor: pointer;
+        z-index: 20;
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      .back-button:hover {
+        color: #5c2c0c;
+        transform: scale(1.2);
+      }
+
+      .envelope {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        cursor: pointer;
+        transition: all 0.8s ease;
+        z-index: 10;
+      }
+
+      .envelope:hover:not(.opened) {
+        transform: scale(1.05);
+      }
+
+      .envelope.opened {
+        transform: scale(0.8) translateY(50px);
+        opacity: 0.7;
+      }
+
+      .envelope-base {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, #8b4513, #a0522d);
+        border-radius: 10px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .envelope-flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(145deg, #cd853f, #d2691e);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top center;
+        transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 2;
+      }
+
+      .envelope.opened .envelope-flap {
+        transform: rotateX(180deg) translateY(-20px);
+      }
+
+      .envelope-seal {
+        position: absolute;
+        top: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle, #ffd700, #ffa500);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #8b4513;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        z-index: 3;
+        transition: all 0.5s ease;
+      }
+
+      .envelope.opened .envelope-seal {
+        opacity: 0;
+        transform: translateX(-50%) scale(0);
+      }
+
+      .letter {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 90vw;
+        max-width: 600px;
+        height: 80vh;
+        max-height: 800px;
+        background: linear-gradient(145deg, #fffef7, #fff8dc);
+        border-radius: 15px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        padding: 40px;
+        opacity: 0;
+        transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 15;
+        overflow-y: auto;
+      }
+
+      .letter.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .letter-content {
+        line-height: 1.8;
+        font-size: 18px;
+        color: #2c3e50;
+        text-align: center;
+      }
+
+      .letter-title {
+        font-size: 28px;
+        color: #8b4513;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .typing-text {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+        text-align: left;
+      }
+
+      .typing-text.show {
+        opacity: 1;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .close-button {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 25;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+
+      .close-button:hover {
+        background: #c0392b;
+        transform: scale(1.1);
+      }
+
+      .close-button:active {
+        transform: scale(0.95);
+        background: #a93226;
+      }
+
+      .floating-hearts {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .heart {
+        position: absolute;
+        color: rgba(255, 192, 203, 0.6);
+        font-size: 20px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10%,
+        90% {
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-10vh) rotate(180deg);
+        }
+      }
+
+      /* Music Control Styles */
+      .music-control {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      #musicToggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        color: #8b4513;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      #musicToggle:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      #musicToggle.playing {
+        background: rgba(255, 154, 158, 0.4);
+      }
+
+      .music-icon,
+      .music-icon-muted {
+        margin-right: 8px;
+      }
+
+      #musicToggle.playing .music-icon {
+        display: inline-block;
+      }
+
+      #musicToggle.playing .music-icon-muted {
+        display: none;
+      }
+
+      #musicToggle:not(.playing) .music-icon {
+        display: none;
+      }
+
+      #musicToggle:not(.playing) .music-icon-muted {
+        display: inline-block;
+      }
+
+      @media (max-width: 844px) {
+        .music-text {
+          display: none;
+        }
+        #musicToggle {
+          width: 44px;
+          height: 44px;
+          padding: 10px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(8px);
+        }
+        .music-icon,
+        .music-icon-muted {
+          margin-right: 0;
+          font-size: 1.2em;
+        }
+        #musicToggle:hover {
+          background: rgba(255, 255, 255, 0.25);
+          transform: scale(1.1);
+        }
+        #musicToggle.playing {
+          background: rgba(255, 154, 158, 0.35);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .music-control {
+          top: 650px;
+          bottom: 20px;
+          right: 20px;
+          position: fixed;
+        }
+        #musicToggle {
+          width: 40px;
+          height: 40px;
+          padding: 8px;
+        }
+        .music-icon,
+        .music-icon-muted {
+          font-size: 1.2em;
+        }
+        .typing-text {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="back-button" id="backBtn">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+
+      <div class="music-control">
+        <button id="musicToggle">
+          <i class="fas fa-volume-up music-icon"></i>
+          <i class="fas fa-volume-mute music-icon-muted"></i>
+          <span class="music-text">Play Music</span>
+        </button>
+      </div>
+      <audio id="bgMusic" loop autoplay>
+        <source src="motdoi.mp3" type="audio/mpeg" />
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+      </audio>
+
+      <div class="floating-hearts"></div>
+
+      <div class="envelope" id="envelope">
+        <div class="envelope-base"></div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">💝</div>
+      </div>
+
+      <div class="letter" id="letter">
+        <button class="close-button" id="closeBtn">&times;</button>
+        <div class="letter-content">
+          <h1 class="letter-title typing-text">Love Embe Iu của anh❤️</h1>
+          <div class="typing-text">
+            <p>Hi embe iu của TP,</p>
+          </div>
+          <div class="typing-text">
+            <p>
+              Hehehe vậy là anh với embe đã cùng nhau trải qua 2 năm rồi đó nè!
+            </p>
+          </div>
+          <div class="typing-text">
+            <p>
+              Embe của anh dui hông? Chứ anh thì dui dui lắm luôn. 2 năm qua
+              mình đã nắm tay nhau đi khắp nơi, có những lúc vui thật vui, mà
+              cũng có lúc buồn buồn xen lẫn nước mắt đúng hông embe.
+            </p>
+          </div>
+          <div class="typing-text">
+            <p>
+              Nhưng dù thế nào, anh vẫn luôn nắm tay embe đi qua hết những chông
+              gai. Năm vừa rồi, anh học được cách dỗ embe giỏi hơn nữa nè, nên
+              embe của anh cứ tiếp tục làm embe để anh dỗ hoài hoài nhoo.
+            </p>
+          </div>
+          <div class="typing-text">
+            <p>
+              Dù embe vui hay buồn, anh cũng sẽ luôn kề bên. Mong rằng tương lai
+              sắp tới, tụi mình sẽ cùng nhau vượt qua hết mọi thử thách, cùng
+              nhau lo cho cuộc sống sau này của hai đứa mình nữa.
+            </p>
+          </div>
+          <div class="typing-text">
+            <p>
+              Embe của anh đừng lo gì hết nha, vì anh luôn đứng bên embe, luôn
+              tin tưởng và thương embe – người ngoan ngoãn, dễ thương nhất của
+              anh.
+            </p>
+          </div>
+          <div class="typing-text">
+            <p>
+              Mong quãng đường phía trước sẽ luôn mỉm cười với tụi mình và mang
+              đến thật nhiều điều tích cực, thật nhiều niềm vui. Anh yêu embe
+              nhiều nhiều ❤️❤️
+            </p>
+          </div>
+
+          <div class="typing-text" style="text-align: right">
+            <p style="margin-top: 30px; font-style: italic">
+              Anhbe iu của embe❤️
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Music control
+      const musicToggle = document.getElementById("musicToggle");
+      const bgMusic = document.getElementById("bgMusic");
+      musicToggle.addEventListener("click", () => {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          musicToggle.querySelector(".music-text").textContent = "Pause Music";
+          musicToggle.classList.add("playing");
+        } else {
+          bgMusic.pause();
+          musicToggle.querySelector(".music-text").textContent = "Play Music";
+          musicToggle.classList.remove("playing");
+        }
+      });
+
+      const envelope = document.getElementById("envelope");
+      const letter = document.getElementById("letter");
+      const closeBtn = document.getElementById("closeBtn");
+      const backBtn = document.getElementById("backBtn");
+      const typingTexts = document.querySelectorAll(".typing-text");
+      let musicPlaying = true;
+
+      // Tạo hiệu ứng trái tim bay
+      function createFloatingHearts() {
+        const heartsContainer = document.querySelector(".floating-hearts");
+        const hearts = ["💕", "💖", "💗", "💝", "💘", "🌹", "✨"];
+
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 100 + "%";
+          heart.style.animationDelay = "0s";
+          heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+          heartsContainer.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 6000);
+        }, 800);
+      }
+
+      // Hiệu ứng chữ chạy từ từ
+      function typewriterEffect() {
+        typingTexts.forEach((text, index) => {
+          setTimeout(() => {
+            text.classList.add("show");
+          }, index * 1200);
+        });
+      }
+
+      // Mở thư
+      envelope.addEventListener("click", () => {
+        if (!envelope.classList.contains("opened")) {
+          envelope.classList.add("opened");
+          envelope.style.cursor = "default";
+
+          setTimeout(() => {
+            letter.classList.add("show");
+            typewriterEffect();
+            createFloatingHearts();
+          }, 800);
+        }
+      });
+
+      // Đóng thư - Cải thiện cho mobile
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        letter.classList.remove("show");
+
+        setTimeout(() => {
+          envelope.classList.remove("opened");
+          typingTexts.forEach((text) => {
+            text.classList.remove("show");
+          });
+          // Reset cursor cho envelope
+          envelope.style.cursor = "pointer";
+        }, 500);
+      });
+
+      // Thêm touch event cho mobile
+      closeBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeBtn.style.transform = "scale(0.95)";
+      });
+
+      closeBtn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeBtn.style.transform = "scale(1)";
+
+        letter.classList.remove("show");
+        setTimeout(() => {
+          envelope.classList.remove("opened");
+          typingTexts.forEach((text) => {
+            text.classList.remove("show");
+          });
+          envelope.style.cursor = "pointer";
+        }, 500);
+      });
+
+      // Nút trở về - có thể tùy chỉnh action
+      backBtn.addEventListener("click", () => {
+        // Có thể thay đổi theo nhu cầu
+        if (letter.classList.contains("show")) {
+          // Nếu đang mở thư thì đóng thư
+          closeBtn.click();
+        } else {
+          // Hoặc quay về trang trước
+          window.history.back();
+        }
+      });
+
+      // Khởi tạo hiệu ứng nền
+      document.addEventListener("DOMContentLoaded", () => {
+        // Tạo hiệu ứng ánh sáng nhẹ cho nền
+        setInterval(() => {
+          document.body.style.filter = `hue-rotate(${
+            Math.sin(Date.now() * 0.001) * 10
+          }deg)`;
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

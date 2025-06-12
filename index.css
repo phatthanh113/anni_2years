@@ -1,0 +1,706 @@
+/* ==========================================================================
+         Base styles & Reset
+         ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(
+    45deg,
+    #ff9a9e 0%,
+    #fecfef 25%,
+    #fecfef 75%,
+    #ff9a9e 100%
+  );
+  min-height: 100vh;
+  font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  padding: 20px 10px;
+}
+
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 20px;
+}
+
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heart {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 25px;
+  animation: floatUp 8s ease-in-out infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(0);
+    opacity: 0;
+  }
+}
+
+.container {
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 50px 40px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  max-width: 90%;
+  width: 100%;
+  animation: slideIn 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 20px auto;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+         Typography & Headings
+         ========================================================================== */
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-family: "Dancing Script", cursive;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffa8a8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: pulse 2s ease-in-out infinite;
+  font-weight: 700;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-family: "Playfair Display", serif;
+  color: #8e44ad;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Day Counter Styles */
+.day-counter-section {
+  margin: 30px 0;
+  padding: 25px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 182, 193, 0.3),
+    rgba(255, 240, 245, 0.5)
+  );
+  border-radius: 20px;
+  border: 2px solid rgba(255, 192, 203, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.counter-title {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: #8e44ad;
+  margin-bottom: 15px;
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+}
+
+.start-date {
+  color: #666;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.day-count {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: bold;
+  color: #ff6b6b;
+  margin: 15px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: countPulse 2s ease-in-out infinite;
+}
+
+@keyframes countPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.day-label {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: #8e44ad;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.current-date-display {
+  color: #777;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.anniversary-date {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-family: "Nunito", sans-serif;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-style: italic;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+         Photo Section Styles
+         ========================================================================== */
+.photo-section {
+  margin: 20px 0 30px 0;
+  text-align: center;
+}
+
+.anniversary-photo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  aspect-ratio: 3/3;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.anniversary-photo:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.photo-caption {
+  margin-top: 15px;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #7f8c8d;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.love-message {
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: #34495e;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(255, 192, 203, 0.2);
+  border-radius: 15px;
+  border-left: 4px solid #e91e63;
+}
+
+/* ==========================================================================
+         Calendar Styles
+         ========================================================================== */
+.calendar {
+  max-width: 100%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.month-header {
+  text-align: center;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ddd;
+}
+
+.day-header {
+  background: #f0f0f0;
+  text-align: center;
+  padding: clamp(8px, 2vw, 12px);
+  font-weight: bold;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  color: #555;
+}
+
+.day {
+  text-align: center;
+  padding: clamp(8px, 2vw, 12px);
+  background: #fff;
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  min-height: clamp(35px, 8vw, 45px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.day:hover {
+  background: #f8f9fa;
+}
+
+.anniversary {
+  background: #ffcccc !important;
+  font-weight: bold;
+  color: #d63384;
+  animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+  0%,
+  50%,
+  100% {
+    transform: scale(1);
+  }
+  25%,
+  75% {
+    transform: scale(1.1);
+  }
+}
+
+/* ==========================================================================
+         Button & Navigation Styles
+         ========================================================================== */
+.buttons-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.nav-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: clamp(12px, 3vw, 18px) clamp(20px, 5vw, 35px);
+  border-radius: 50px;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  min-width: clamp(150px, 40vw, 180px);
+  flex: 1;
+  max-width: 250px;
+}
+
+.nav-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.nav-button:hover::before {
+  left: 100%;
+}
+
+.nav-button:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.nav-button:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.letter-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.3s ease;
+}
+
+.timeline-btn {
+  background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+}
+
+/* ==========================================================================
+         Decorative Elements & Animations
+         ========================================================================== */
+.decorative-hearts {
+  position: fixed;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: rgba(255, 182, 193, 0.6);
+  animation: bounce 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+.heart-1 {
+  top: 20%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.heart-2 {
+  top: 30%;
+  right: 5%;
+  animation-delay: 0.5s;
+}
+
+.heart-3 {
+  bottom: 25%;
+  left: 5%;
+  animation-delay: 1s;
+}
+
+.heart-4 {
+  bottom: 20%;
+  right: 5%;
+  animation-delay: 1.5s;
+}
+
+.sparkles {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  color: #ffd700;
+  font-size: clamp(15px, 3vw, 20px);
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+.couple-emoji {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  margin: 20px 0;
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* ==========================================================================
+   Music Control Styles - FINAL FIX
+   ========================================================================== */
+.music-control {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 999999 !important;
+  transition: all 0.3s ease;
+  pointer-events: auto !important;
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+#musicToggle {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(15px);
+  color: #8b4513 !important;
+  padding: 12px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  position: relative;
+  overflow: visible;
+}
+
+#musicToggle:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+#musicToggle.playing {
+  background: rgba(255, 154, 158, 0.95) !important;
+  color: white !important;
+}
+
+#musicToggle.playing:hover {
+  background: rgba(255, 154, 158, 1) !important;
+}
+
+.music-icon,
+.music-icon-muted {
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+#musicToggle.playing .music-icon {
+  display: inline-block;
+}
+
+#musicToggle.playing .music-icon-muted {
+  display: none;
+}
+
+#musicToggle:not(.playing) .music-icon {
+  display: none;
+}
+
+#musicToggle:not(.playing) .music-icon-muted {
+  display: inline-block;
+}
+
+.calendar-description {
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 192, 203, 0.15);
+  border-radius: 15px;
+  border-left: 4px solid #ff69b4;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: #34495e;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* ==========================================================================
+         Media Queries & Responsive Design
+         ========================================================================== */
+@media (max-width: 768px) {
+  .music-control {
+    top: 650px;
+    bottom: 15px !important;
+    right: 15px !important;
+  }
+
+  .music-text {
+    display: none;
+  }
+
+  #musicToggle {
+    width: 50px !important;
+    height: 50px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    gap: 0 !important;
+  }
+
+  .music-icon,
+  .music-icon-muted {
+    font-size: 1.3em;
+  }
+
+  .container {
+    padding: 30px 20px;
+    margin: 10px;
+    border-radius: 20px;
+  }
+
+  .calendar-grid {
+    gap: 1px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-button {
+    width: 100%;
+    min-width: auto;
+    max-width: none;
+  }
+
+  .decorative-hearts {
+    display: none;
+  }
+  .day-counter-section {
+    margin: 20px 0;
+    padding: 20px;
+  }
+
+  body {
+    padding: 10px 5px;
+  }
+
+  .page-wrapper {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-control {
+    bottom: 10px !important;
+    right: 10px !important;
+  }
+
+  #musicToggle {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .music-icon,
+  .music-icon-muted {
+    font-size: 1.2em;
+  }
+
+  body {
+    padding: 10px 5px;
+  }
+
+  .container {
+    padding: 20px 15px;
+    margin: 5px;
+  }
+
+  .photo-section {
+    margin: 15px 0 20px 0;
+  }
+
+  .love-message {
+    padding: 15px;
+    margin-bottom: 30px;
+  }
+
+  .calendar {
+    margin: 15px auto;
+  }
+
+  .day-header,
+  .day {
+    font-size: 0.8rem;
+  }
+  .day-counter-section {
+    margin: 15px 0;
+    padding: 15px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 800px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .couple-emoji {
+    margin: 10px 0;
+  }
+
+  .photo-section {
+    margin: 10px 0 15px 0;
+  }
+
+  .page-wrapper {
+    padding-top: 10px;
+  }
+}

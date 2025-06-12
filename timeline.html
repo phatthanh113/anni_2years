@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline Ngày Kỷ Niệm 2 Năm</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(
+          45deg,
+          #ff9a9e 0%,
+          #fecfef 25%,
+          #fecfef 75%,
+          #ff9a9e 100%
+        );
+        min-height: 100vh;
+        font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        position: relative;
+        padding: 20px 10px;
+        overflow-x: hidden;
+      }
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: transparent;
+        color: #8b4513;
+        border: none;
+        padding: 0;
+        font-size: 32px;
+        cursor: pointer;
+        z-index: 20;
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      .back-button:hover {
+        color: #5c2c0c;
+        transform: scale(1.2);
+      }
+      .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.3);
+        animation: float 8s infinite ease-in-out;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        width: 75%;
+        max-width: 700px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        color: white;
+      }
+
+      .header h1 {
+        font-size: 2.8em;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2),
+            0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        to {
+          text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2),
+            0 0 30px rgba(255, 255, 255, 0.5);
+        }
+      }
+
+      .header p {
+        font-size: 1.1em;
+        font-weight: 400;
+        opacity: 0.9;
+        margin-bottom: 20px;
+      }
+
+      .date-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .timeline {
+        position: relative;
+        padding: 30px 0;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.8),
+          rgba(255, 255, 255, 0.4)
+        );
+        transform: translateX(-50%);
+        border-radius: 2px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin: 30px 0;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: slideUp 0.6s ease-out forwards;
+      }
+
+      .timeline-item:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .timeline-item:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .timeline-item:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .timeline-item:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .timeline-item:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .timeline-item:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+      .timeline-item:nth-child(7) {
+        animation-delay: 0.7s;
+      }
+      .timeline-item:nth-child(8) {
+        animation-delay: 0.8s;
+      }
+      .timeline-item:nth-child(9) {
+        animation-delay: 0.9s;
+      }
+      .timeline-item:nth-child(10) {
+        animation-delay: 1s;
+      }
+      .date-section {
+        text-align: center;
+      }
+      @keyframes slideUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .timeline-item:nth-child(odd) .content {
+        left: -55%;
+        right: 0;
+        text-align: right;
+      }
+
+      .timeline-item:nth-child(even) .content {
+        left: 55%;
+        right: 0;
+        text-align: left;
+      }
+
+      .content {
+        position: relative;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 20px 25px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .content:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        background: rgba(255, 255, 255, 1);
+      }
+
+      .time {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 15px;
+        font-weight: 600;
+        font-size: 0.85em;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        z-index: 10;
+        min-width: 80px;
+        text-align: center;
+      }
+
+      .timeline-item:nth-child(odd) .time {
+        top: 15px;
+      }
+
+      .timeline-item:nth-child(even) .time {
+        top: 15px;
+      }
+
+      .content h3 {
+        color: #333;
+        font-size: 1.2em;
+        font-weight: 700;
+        margin-bottom: 8px;
+        margin-top: 5px;
+      }
+
+      .content p {
+        color: #666;
+        line-height: 1.5;
+        font-size: 0.95em;
+        margin-bottom: 10px;
+      }
+
+      .activity-type {
+        display: inline-block;
+        background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+        color: #333;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.8em;
+        font-weight: 600;
+        margin-top: 5px;
+      }
+
+      .icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #ff9a9e, #fecfef);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
+        z-index: 5;
+        transition: all 0.3s ease;
+      }
+
+      .timeline-item:hover .icon {
+        transform: translate(-50%, -50%) scale(1.15) rotate(360deg);
+        box-shadow: 0 6px 20px rgba(255, 154, 158, 0.6);
+      }
+
+      .completion-status {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .completion-status h3 {
+        color: white;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 15px 0;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        border-radius: 4px;
+        animation: fillProgress 3s ease-out;
+      }
+
+      @keyframes fillProgress {
+        from {
+          width: 0%;
+        }
+        to {
+          width: 100%;
+        }
+      }
+      @media (max-width: 900px) {
+        .container {
+          width: 100%;
+          max-width: 100%;
+          margin: 0 auto;
+          position: relative;
+          z-index: 2;
+        }
+      }
+      @media (max-width: 768px) {
+        .timeline::before {
+          left: 30px;
+        }
+
+        .timeline-item:nth-child(odd) .content,
+        .timeline-item:nth-child(even) .content {
+          position: relative;
+          left: 60px;
+          right: auto;
+          width: calc(100% - 80px); /* tránh đè vào icon */
+          margin: 10px 0;
+          text-align: left;
+        }
+
+        .time {
+          left: 30px;
+          transform: translateX(-50%);
+        }
+
+        .icon {
+          left: 30px;
+        }
+
+        .header h1 {
+          font-size: 2.2em;
+        }
+
+        .content {
+          padding: 15px 20px;
+          box-sizing: border-box;
+          max-width: 90%;
+          width: auto;
+        }
+        .back-button {
+          top: 15px;
+          left: 15px;
+          padding: 10px 16px;
+        }
+      }
+      .music-icon,
+      .music-icon-muted {
+        margin-right: 8px;
+      }
+
+      #musicToggle.playing .music-icon {
+        display: inline-block;
+      }
+
+      #musicToggle.playing .music-icon-muted {
+        display: none;
+      }
+
+      #musicToggle:not(.playing) .music-icon {
+        display: none;
+      }
+
+      #musicToggle:not(.playing) .music-icon-muted {
+        display: inline-block;
+      }
+
+      #musicToggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      @media (max-width: 844px) {
+        .music-text {
+          display: none;
+        }
+        #musicToggle {
+          width: 44px;
+          height: 44px;
+          padding: 10px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(8px);
+        }
+        .music-icon,
+        .music-icon-muted {
+          margin-right: 0;
+          font-size: 1.2em;
+        }
+        #musicToggle:hover {
+          background: rgba(255, 255, 255, 0.25);
+          transform: scale(1.1);
+        }
+        #musicToggle.playing {
+          background: rgba(255, 154, 158, 0.35);
+        }
+      }
+
+      .music-control {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      #musicToggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        color: #8b4513;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      #musicToggle:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      #musicToggle.playing {
+        background: rgba(255, 154, 158, 0.4);
+      }
+      @media (max-width: 768px) {
+        .music-control {
+          top: auto;
+          bottom: 20px;
+          right: 20px;
+        }
+        #musicToggle {
+          width: 40px;
+          height: 40px;
+          padding: 8px;
+        }
+        .music-icon,
+        .music-icon-muted {
+          font-size: 1.2em;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .music-control {
+          top: 650px;
+          bottom: 15px;
+          right: 15px;
+        }
+        #musicToggle {
+          width: 36px;
+          height: 36px;
+          padding: 6px;
+        }
+        .music-icon,
+        .music-icon-muted {
+          font-size: 1.1em;
+        }
+      }
+
+      @media (max-height: 600px) {
+        .music-control {
+          top: 550px;
+          bottom: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="floating-hearts" id="hearts"></div>
+      <div class="music-control">
+        <button id="musicToggle">
+          <i class="fas fa-volume-up music-icon"></i>
+          <i class="fas fa-volume-mute music-icon-muted"></i>
+          <span class="music-text">Play Music</span>
+        </button>
+      </div>
+      <audio id="bgMusic" loop autoplay>
+        <source src="motdoi.mp3" type="audio/mpeg" />
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+      </audio>
+      <button class="back-button" id="backBtn">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="header">
+        <h1>💕 Happy Anniversary 2 Years 💕</h1>
+        <p>Timeline hoạt động trong ngày đặc biệt</p>
+      </div>
+      <div class="timeline">
+        <div class="date-section" style="text-align: center">
+          <div class="date-badge">21 Tháng 6, 2025</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">18:00</div>
+          <div class="icon">☀️</div>
+          <div class="content">
+            <h3>Check-in</h3>
+            <p>
+              Em bé đón anh, hai đứa mình cùng nhận phòng và chuẩn bị cho một
+              buổi tối thật đặc biệt.
+            </p>
+            <div class="activity-type">Check-in</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">19:30</div>
+          <div class="icon">🍽️</div>
+          <div class="content">
+            <h3>Măm tối</h3>
+            <p>Anh dắt embe đi măm tối</p>
+            <div class="activity-type">Măm tối</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">21:00</div>
+          <div class="icon">🌙</div>
+          <div class="content">
+            <h3>Dạo TP Đà Nẵng và coi pháo hoa</h3>
+            <p>Ngắm pháo hoa</p>
+            <div class="activity-type">Coi pháo hoa</div>
+          </div>
+        </div>
+        <div class="date-section">
+          <div class="date-badge">22 Tháng 6, 2025</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">05:00</div>
+          <div class="icon">⛵️</div>
+          <div class="content">
+            <h3>Chèo Sup</h3>
+            <p>Anh dẫn embe đi chèo sup ngắm bình minh</p>
+            <div class="activity-type">Chèo Sup</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">09:00</div>
+          <div class="icon">🍽️</div>
+          <div class="content">
+            <h3>Măm sáng</h3>
+            <p>Anh dẫn embe đi măm măm sáng</p>
+            <div class="activity-type">Măm sáng</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">10:00</div>
+          <div class="icon">📸</div>
+          <div class="content">
+            <h3>Coffee và chụp hình</h3>
+            <p>Anh dẫn embe đi uống cà phê và chụp hình</p>
+            <div class="activity-type">Nghệ thuật</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">15:00</div>
+          <div class="icon">📹</div>
+          <div class="content">
+            <h3>Xem phim</h3>
+            <p>Anh dẫn embe đi xem phim</p>
+            <div class="activity-type">Xem phim</div>
+          </div>
+        </div>
+        <div class="date-section">
+          <div class="date-badge">23 Tháng 6, 2025</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">18:30</div>
+          <div class="icon">🍽️</div>
+          <div class="content">
+            <h3>Măm tối</h3>
+            <p>Anh dắt embe đi măm tối</p>
+            <div class="activity-type">Măm tối</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="time">09:00</div>
+          <div class="icon">🚶‍♀️</div>
+          <div class="content">
+            <h3>Đi chơi</h3>
+            <p>
+              Anh dẫn embe đi chơi Bà Nà hoặc đi chơi công viên nước Mikazuki
+            </p>
+            <div class="activity-type">Đi chơi</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="completion-status">
+        <h3>🎉 Hoàn thành ngày kỷ niệm</h3>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Xử lý nút back
+      document.getElementById("backBtn").addEventListener("click", function () {
+        window.location.href = "index.html";
+      });
+
+      // Điều khiển nhạc
+      const musicToggle = document.getElementById("musicToggle");
+      const bgMusic = document.getElementById("bgMusic");
+      musicToggle.addEventListener("click", () => {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          musicToggle.querySelector(".music-text").textContent = "Pause Music";
+          musicToggle.classList.add("playing");
+        } else {
+          bgMusic.pause();
+          musicToggle.querySelector(".music-text").textContent = "Play Music";
+          musicToggle.classList.remove("playing");
+        }
+      });
+
+      // Tạo hiệu ứng trái tim bay
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💕";
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.animationDelay = Math.random() * 6 + "s";
+        heart.style.animationDuration = Math.random() * 3 + 6 + "s";
+        document.getElementById("hearts").appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 9000);
+      }
+
+      // Tạo trái tim mỗi 2 giây
+      setInterval(createHeart, 2000);
+
+      // Tạo một số trái tim ban đầu
+      for (let i = 0; i < 5; i++) {
+        setTimeout(createHeart, i * 400);
+      }
+
+      // Thêm hiệu ứng click cho các item
+      document.querySelectorAll(".timeline-item").forEach((item) => {
+        item.addEventListener("click", function () {
+          this.style.transform = "scale(0.98)";
+          setTimeout(() => {
+            this.style.transform = "scale(1)";
+          }, 150);
+        });
+      });
+    </script>
+  </body>
+</html>
